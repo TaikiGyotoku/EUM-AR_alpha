@@ -19,7 +19,9 @@
       z-index: 2;
     }
 
-    #overlay.hidden { display: none; }
+    #overlay.hidden {
+      display: none;
+    }
 
     #overlay img {
       width: 80%;
@@ -28,42 +30,16 @@
   </style>
 
   <script>
-    AFRAME.registerComponent('spawn-fixed', {
+    AFRAME.registerComponent('control-ui', {
       init: function () {
         const overlay = document.querySelector("#overlay");
-        const scene = document.querySelector("a-scene");
 
         this.el.addEventListener('targetFound', () => {
           overlay.classList.add("hidden");
+        });
 
-          if (document.querySelector("#fixed-box")) return;
-
-          // ★ ワールド座標取得
-          const worldPos = new THREE.Vector3();
-          const worldQuat = new THREE.Quaternion();
-
-          this.el.object3D.getWorldPosition(worldPos);
-          this.el.object3D.getWorldQuaternion(worldQuat);
-
-          const box = document.createElement("a-plane");
-
-          box.setAttribute("id", "fixed-box");
-          box.setAttribute("color", "red");
-          box.setAttribute("opacity", "0.6");
-          box.setAttribute("width", "2.4");
-          box.setAttribute("height", "1.0");
-
-          scene.appendChild(box);
-
-          // ★ quaternion → rotation に変換
-          const euler = new THREE.Euler().setFromQuaternion(worldQuat);
-
-          box.object3D.position.copy(worldPos);
-          box.object3D.rotation.copy(euler);
-
-          // 右上に大きく移動
-          box.object3D.position.x += 4;
-          box.object3D.position.y += 1;
+        this.el.addEventListener('targetLost', () => {
+          // 何もしない
         });
       }
     });
@@ -72,6 +48,7 @@
 
 <body>
 
+  <!-- 自作UI -->
   <div id="overlay">
     <img src="./assets/marker.png">
   </div>
@@ -81,13 +58,35 @@
       imageTargetSrc: ./assets/targets.mind;
       uiScanning: no;
     "
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights"
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false"
   >
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <a-entity mindar-image-target="targetIndex: 0" spawn-fixed></a-entity>
+    <a-entity mindar-image-target="targetIndex: 0" control-ui>
+
+      <!-- ✅ 囲い①（元の位置） -->
+      <a-plane
+        color="gray"
+        opacity="0.6"
+        width="2.4"
+        height="1.0"
+        position="1.2 0.9 0.05">
+      </a-plane>
+
+      <!-- ✅ 囲い②（かなり右） -->
+      <a-plane
+        color="red"
+        opacity="0.6"
+        width="2.4"
+        height="1.0"
+        position="4 0.9 0.05">
+      </a-plane>
+
+    </a-entity>
 
   </a-scene>
 
