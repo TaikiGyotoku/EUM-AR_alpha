@@ -3,22 +3,30 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+  <!-- MindAR -->
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
   <style>
-    body { margin: 0; overflow: hidden; }
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
 
-    /* スキャンUI */
+    /* ===== カスタムスキャンUI ===== */
     #example-scanning-overlay {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
+
       display: flex;
       justify-content: center;
       align-items: center;
+
       background: rgba(0,0,0,0.2);
       z-index: 2;
     }
@@ -36,11 +44,12 @@
 
 <body>
 
-  <!-- ✅ カスタムスキャンUI -->
+  <!-- ===== スキャン時に表示されるマーカー画像 ===== -->
   <div id="example-scanning-overlay">
     <img src="./assets/marker.png">
   </div>
 
+  <!-- ===== ARシーン ===== -->
   <a-scene
     mindar-image="
       imageTargetSrc: ./assets/targets.mind;
@@ -52,17 +61,19 @@
     device-orientation-permission-ui="enabled: false"
   >
 
+    <!-- カメラ -->
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
+    <!-- マーカー -->
     <a-entity mindar-image-target="targetIndex: 0">
 
-      <!-- ✅ 囲い（大きめ・右上・非重なり） -->
+      <!-- ✅ 大きい囲い（4倍・右上・非重なり） -->
       <a-plane
         color="gray"
         opacity="0.6"
-        width="0.6"
-        height="0.25"
-        position="0.7 0.45 0.05">
+        width="2.4"
+        height="1.0"
+        position="1.2 0.9 0.05">
       </a-plane>
 
     </a-entity>
