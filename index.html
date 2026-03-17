@@ -37,14 +37,14 @@
         this.el.addEventListener('targetFound', () => {
           console.log("found");
 
-          // 一度見つけたら消す
+          // 一度だけ消す
           overlay.classList.add("hidden");
         });
 
         this.el.addEventListener('targetLost', () => {
           console.log("lost");
 
-          // ❌ 何もしない（ここが重要）
+          // 何もしない（UI戻さない）
         });
       }
     });
@@ -59,7 +59,10 @@
   </div>
 
   <a-scene
-    mindar-image="imageTargetSrc: ./assets/targets.mind;"
+    mindar-image="
+      imageTargetSrc: ./assets/targets.mind;
+      uiScanning: no;
+    "
     color-space="sRGB"
     renderer="colorManagement: true, physicallyCorrectLights"
     vr-mode-ui="enabled: false"
