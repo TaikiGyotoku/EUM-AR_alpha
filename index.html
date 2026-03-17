@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  
+  <!-- MindAR -->
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+</head>
+
+<body>
+  <a-scene
+    mindar-image="imageTargetSrc: assets/targets.mind;"
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false"
+  >
+
+    <!-- アセット -->
+    <a-assets>
+      <!-- マーカー画像（targets.mindと同じ元画像） -->
+      <img id="markerImage" src="assets/marker.png">
+    </a-assets>
+
+    <!-- カメラ -->
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <!-- マーカー -->
+    <a-entity mindar-image-target="targetIndex: 0">
+
+      <!-- 半透明マーカー表示 -->
+      <a-plane
+        src="#markerImage"
+        position="0 0 0"
+        width="1"
+        height="0.6"
+        opacity="0.4">
+      </a-plane>
+
+      <!-- テスト用：常時囲い（灰色） -->
+      <a-plane
+        color="gray"
+        opacity="0.4"
+        width="0.3"
+        height="0.1"
+        position="0 0.2 0.01">
+      </a-plane>
+
+    </a-entity>
+
+  </a-scene>
+</body>
+</html>
