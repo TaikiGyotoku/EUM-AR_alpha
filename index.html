@@ -68,22 +68,23 @@
 
     <a-entity mindar-image-target="targetIndex: 0" control-ui>
 
-      <!-- ✅ 囲い①（元の位置） -->
+      <!-- ピンク（縦長） -->
       <a-plane
         color="pink"
         opacity="0.6"
-        width="4.8"
-        height="2.0"
-        position="1.2 0.9 0.05">
+        width="2.0"
+        height="4.0"
+        position="-0.8 0.8 0.05">
       </a-plane>
 
-      <!-- ✅ 囲い②（かなり右） -->
+      <!-- オレンジ（縦長＋点滅） -->
       <a-plane
         color="orange"
         opacity="0.6"
-        width="4.8"
-        height="2.0"
-        position="4 0.9 0.05">
+        width="2.0"
+        height="4.0"
+        position="0.8 0.8 0.05"
+        animation="property: opacity; from: 0.3; to: 1.0; dir: alternate; dur: 800; loop: true">
       </a-plane>
 
     </a-entity>
