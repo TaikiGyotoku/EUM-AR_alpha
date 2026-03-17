@@ -3,103 +3,36 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
-  <!-- MindAR -->
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
   <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-    }
-
-    /* ===== スキャンUI ===== */
-    #example-scanning-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      background: rgba(0,0,0,0.2);
-      z-index: 2;
-    }
-
-    #example-scanning-overlay.hidden {
-      display: none;
-    }
-
-    #example-scanning-overlay .inner {
-      width: 80vw;
-      height: 80vw;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #example-scanning-overlay img {
-      width: 100%;
-      opacity: 0.7;
-    }
+    body { margin: 0; overflow: hidden; }
   </style>
 </head>
 
 <body>
 
-  <!-- ===== カスタムスキャンUI ===== -->
-  <div id="example-scanning-overlay">
-    <div class="inner">
-      <!-- ★ 必ず存在する画像 -->
-      <img src="./assets/marker.png" />
-    </div>
-  </div>
-
-  <!-- ===== ARシーン ===== -->
   <a-scene
-    mindar-image="
-      imageTargetSrc: ./assets/targets.mind;
-      uiScanning: #example-scanning-overlay;
-    "
+    mindar-image="imageTargetSrc: ./assets/targets.mind;"
     color-space="sRGB"
     renderer="colorManagement: true, physicallyCorrectLights"
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false"
   >
 
-    <!-- ===== アセット ===== -->
-    <a-assets>
-      <!-- ★ marker.png 必須 -->
-      <img id="markerImage" src="./assets/marker.png">
-    </a-assets>
-
-    <!-- ===== カメラ ===== -->
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- ===== マーカー ===== -->
+    <!-- マーカー -->
     <a-entity mindar-image-target="targetIndex: 0">
 
-      <!-- 半透明マーカー表示 -->
-      <a-plane
-        src="#markerImage"
-        position="0 0 0"
-        width="1"
-        height="0.6"
-        opacity="0.4">
-      </a-plane>
-
-      <!-- テスト囲い -->
+      <!-- ✅ 囲い（右上・少し浮かせる） -->
       <a-plane
         color="gray"
-        opacity="0.4"
+        opacity="0.6"
         width="0.3"
-        height="0.1"
-        position="0 0.2 0.01">
+        height="0.15"
+        position="0.55 0.35 0.05">
       </a-plane>
 
     </a-entity>
