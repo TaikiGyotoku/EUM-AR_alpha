@@ -36,11 +36,14 @@
         this.el.addEventListener('targetFound', () => {
           overlay.classList.add("hidden");
 
-          // 既に生成済みならスキップ
           if (document.querySelector("#fixed-box")) return;
 
-          const pos = this.el.object3D.position.clone();
-          const rot = this.el.object3D.rotation.clone();
+          // ★ ワールド座標取得
+          const worldPos = new THREE.Vector3();
+          const worldQuat = new THREE.Quaternion();
+
+          this.el.object3D.getWorldPosition(worldPos);
+          this.el.object3D.getWorldQuaternion(worldQuat);
 
           const box = document.createElement("a-plane");
 
@@ -50,18 +53,17 @@
           box.setAttribute("width", "2.4");
           box.setAttribute("height", "1.0");
 
-          // ★ 先に追加
           scene.appendChild(box);
 
-          // ★ 少し待ってから位置設定（ここが超重要）
-          setTimeout(() => {
-            box.object3D.position.copy(pos);
-            box.object3D.rotation.copy(rot);
+          // ★ quaternion → rotation に変換
+          const euler = new THREE.Euler().setFromQuaternion(worldQuat);
 
-            // 右上にずらす
-            box.object3D.position.x += 4;
-            box.object3D.position.y += 1;
-          }, 0);
+          box.object3D.position.copy(worldPos);
+          box.object3D.rotation.copy(euler);
+
+          // 右上に大きく移動
+          box.object3D.position.x += 4;
+          box.object3D.position.y += 1;
         });
       }
     });
